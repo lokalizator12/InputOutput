@@ -1,26 +1,26 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-      File directory = new File("Folder1");
-      directory.mkdir();
-      File file = new File("Folder1/Mike.txt");
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File directory = new File("Folder1");
 
-        try (InputStream inputStream = new FileInputStream(file)) {
-            int b = inputStream.read();
-            while (b != -1){
-                System.out.print((char)b);
-                b = inputStream.read();
+        File fileWithName = new File(directory, "Names.txt");
+
+        try (Reader reader = new InputStreamReader(new FileInputStream(fileWithName))) {
+            char[] array = new char[16];
+            int count = reader.read(array);
+            StringBuilder stringBuilder = new StringBuilder();
+            while (count > 0) {
+                stringBuilder.append(new String(array, 0, count));
+                count = reader.read(array);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            String[] names = stringBuilder.toString().split(" ");
+            Arrays.stream(names)
+                    .filter((name -> name.startsWith("A")))
+                    .forEach(System.out::println);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-
     }
 }
