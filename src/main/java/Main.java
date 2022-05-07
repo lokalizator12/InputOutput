@@ -10,13 +10,14 @@ import java.util.concurrent.ExecutionException;
 
 public class Main {
     public static void main(String[] args) {
-    cats();
+        cats();
     }
-    private static void cats(){
+
+    private static void cats() {
 
         List<Cat> arrayCats = new ArrayList<>();
-        for (int i = 1; i <= 5; i++){
-            arrayCats.add(new Cat("Simska"+i,"Murze"+i, 64.3+i*2));
+        for (int i = 1; i <= 5; i++) {
+            arrayCats.add(new Cat("Simska" + i, "Murze" + i, 64.3 + i * 2));
         }
         File fileWithCats = new File("Cats.or");
         try {
@@ -25,27 +26,28 @@ public class Main {
             e.printStackTrace();
         }
 
-        try(ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileWithCats,true))){
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileWithCats, true))) {
 
             outputStream.writeObject(arrayCats);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
 
-        try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileWithCats))){
+        try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(fileWithCats))) {
             List<Cat> catsRes = (List<Cat>) objectInputStream.readObject();
-                for (Cat catRes : catsRes)
-                    System.out.println(catRes.getNickname());
+            for (Cat catRes : catsRes)
+                System.out.println(catRes.getNickname());
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
 
     }
-    private void persons(){
+
+    private void persons() {
 
         User user1 = new User("Klop", "Klopoich", 20, new Address("9 may", 37));
         File file1 = new File("loastWork.pnh");
